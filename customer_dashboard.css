@@ -155,7 +155,9 @@ body {
     text-align: center;
 }
 
-#stat-one, #stat-two, #stat-three {
+#stat-one,
+#stat-two,
+#stat-three {
     text-align: center;
 }
 
@@ -247,6 +249,58 @@ body {
 #cta-button:hover {
     background: #0e2049;
 }
+
+#our-services {
+    text-align: center;
+    padding: 60px 40px;
+}
+
+#our-services h2 {
+    color: #192156;
+    margin-bottom: 40px;
+}
+
+#service-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    width: 250px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.card h3 {
+    color: #192156;
+}
+
+.card .price {
+    color: #192156;
+    font-weight: 600;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#explore-more {
+    margin-top: 40px;
+}
+
+
+
 
 @media (max-width: 768px) {
     #hero {
