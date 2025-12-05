@@ -98,6 +98,63 @@ body {
     margin-bottom: 16px;
 }
 
+  /*Typing styling from "https://codepen.io/"*/
+
+
+.typing-wrapper {
+    display: inline-block;
+}
+
+.typing-demo {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #7058F2;
+    color: #7058F2;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    --typing-chars: 20;
+    --typing-width: 0px;
+}
+
+.typing-demo.typing {
+    animation: typing calc(var(--typing-chars) * 0.08s) steps(var(--typing-chars)) forwards,
+        caret-blink 0.7s step-end infinite alternate;
+}
+
+.typing-demo.erasing {
+    animation: erase calc(var(--typing-chars) * 0.05s) steps(var(--typing-chars)) forwards,
+        caret-blink 0.7s step-end infinite alternate;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: var(--typing-width);
+    }
+}
+
+@keyframes erase {
+    from {
+        width: var(--typing-width);
+    }
+
+    to {
+        width: 0;
+    }
+}
+
+@keyframes caret-blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
 #hero-subtitle {
     font-size: 14px;
     color: #4b5563;

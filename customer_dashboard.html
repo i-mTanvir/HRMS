@@ -30,9 +30,15 @@
 
         <div id="hero">
             <div id="hero-left">
-                <div id="hero-title">Expert & Hassle-Free<br>Solutions for Your<br>AC Repair</div>
-                <div id="hero-subtitle">Stuck garage door? Strange noises? Our expert team is ready to fix it today. Get
-                    fast, affordable, and professional service with just one call.</div>
+                <div id="hero-title">
+                    <div>Expert & Hassle-Free</div>
+                    <div>Solutions for Your</div>
+                    <div class="typing-wrapper">
+                        <span id="typing-text" class="typing-demo"></span>
+                    </div>
+                </div>
+                <div id="hero-subtitle">Need a trusted repair pro? Find and book the right specialist online, choose
+                    your time, and get transparent pricing for a quick, reliable fix.</div>
                 <div id="hero-search">
                     <div id="search-icon">🔍</div>
                     <input id="search-input" type="text" placeholder="Search ...">
@@ -184,6 +190,54 @@
     <div id="footer-bottom">
         <p>© All Rights Reserved. Developed by Tanvir, Rakib, Raichy.</p>
     </div>
+     <!--*Typing styling from "https://codepen.io/"-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const typingEl = document.getElementById('typing-text');
+            if (!typingEl) return;
+
+            const services = [
+                'Home Appliances',
+                'Electrical Work',
+                'Plumbing Needs',
+                'Refrigerator Repair'
+            ];
+
+            let index = 0;
+            const typingSpeed = 90; // ms per character while typing
+            const eraseSpeed = 55;  // ms per character while erasing
+            const holdTime = 1200;  // pause after a word is fully typed
+
+            function cycleText() {
+                const text = services[index];
+                typingEl.textContent = text;
+                typingEl.style.width = 'auto';
+                typingEl.style.setProperty('--typing-width', `${typingEl.scrollWidth}px`);
+                typingEl.style.removeProperty('width');
+                typingEl.style.setProperty('--typing-chars', text.length);
+                typingEl.classList.remove('erasing');
+                void typingEl.offsetWidth; // force reflow to restart animation
+                typingEl.classList.add('typing');
+
+                const typeDuration = text.length * typingSpeed;
+
+                setTimeout(() => {
+                    typingEl.classList.remove('typing');
+                    typingEl.classList.add('erasing');
+
+                    const eraseDuration = text.length * eraseSpeed;
+                    setTimeout(() => {
+                        typingEl.classList.remove('erasing');
+                        index = (index + 1) % services.length;
+                        cycleText();
+                    }, eraseDuration);
+                }, typeDuration + holdTime);
+            }
+
+            cycleText();
+        });
+    </script>
 </body>
 
 </html>
