@@ -10,7 +10,7 @@ body {
 }
 
 #emergency-banner {
-    background: #7058F2;
+    background: #192156;
     color: #fff;
     text-align: center;
     padding: 10px 0;
@@ -116,7 +116,7 @@ body {
 }
 
 #search-icon {
-    color: #7058F2;
+    color: #192156;
     font-size: 16px;
 }
 
@@ -142,7 +142,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    background: #7058F2;
+    background: #192156;
     color: #fff;
     padding: 18px 24px;
     gap: 10px;
@@ -213,7 +213,7 @@ body {
 }
 
 .offer-percent {
-    color: #7058F2;
+    color: #192156;
     font-size: 18px;
 }
 
@@ -234,7 +234,7 @@ body {
 }
 
 .cta-button {
-    background: #7058F2;
+    background: #192156;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -358,29 +358,4 @@ body {
     text-align: center;
     padding: 15px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-
-
-
-
-@media (max-width: 768px) {
-    #hero {
-        flex-direction: column;
-    }
-
-    #stats-banner {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    #offer-card-one,
-    #offer-card-two {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    #nav {
-        flex-direction: column;
-        gap: 12px;
-    }
 }
