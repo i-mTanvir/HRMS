@@ -30,9 +30,11 @@
     <div class="login-right">
 
         <h1 class="login-title">Welcome Back</h1>
-        <p class="login-subtitle">
-            Log in to manage your repair requests and services.
-        </p>
+        <div class="login-role">
+            <span>Login as</span>
+            <label><input type="radio" name="loginRole" value="customer" checked> Customer</label>
+            <label><input type="radio" name="loginRole" value="provider"> Provider</label>
+        </div>
 
         <form class="login-form">
 
@@ -61,18 +63,12 @@
         </form>
 
         <p class="bottom-text">
-            Don’t have an account? <a href="#" class="link-main">Sign Up</a>
+            Don’t have an account? <a href="signupp.html" class="link-main">Sign Up</a>
         </p>
 
         <!-- SOCIAL + GUEST PART -->
         <div class="social-login">
-            <p class="social-title">Or Login with</p>
-
-            <div class="social-icons">
-                <img src="media/google.png" alt="Google login">
-                <img src="media/facebook.png" alt="Facebook login">
-            </div>
-
+           
             <p class="guest-text">
                 Continue As <span class="guest-link">Guest</span>
             </p>
