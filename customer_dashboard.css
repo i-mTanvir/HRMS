@@ -236,6 +236,7 @@ body {
     padding: 16px 24px 32px;
 }
 
+.cta-button,
 #cta-button {
     background: #12295b;
     color: #fff;
@@ -246,6 +247,7 @@ body {
     cursor: pointer;
 }
 
+.cta-button:hover,
 #cta-button:hover {
     background: #0e2049;
 }
@@ -262,7 +264,7 @@ body {
 
 #service-cards {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     gap: 30px;
 }
 
@@ -271,7 +273,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     padding: 15px;
-    width: 250px;
+    width: 300px;
 }
 
 .card img {
