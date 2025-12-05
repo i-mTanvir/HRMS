@@ -236,9 +236,8 @@ body {
     padding: 16px 24px 32px;
 }
 
-.cta-button,
-#cta-button {
-    background: #12295b;
+.cta-button {
+    background: #7058F2;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -247,9 +246,8 @@ body {
     cursor: pointer;
 }
 
-.cta-button:hover,
-#cta-button:hover {
-    background: #0e2049;
+.cta-button:hover {
+    background: #5e48d6;
 }
 
 #our-services {
