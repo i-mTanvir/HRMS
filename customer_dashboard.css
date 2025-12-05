@@ -1,0 +1,270 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    color: #111;
+}
+
+#page {
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#emergency-banner {
+    background: #7058F2;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#nav-left {
+    display: flex;
+    align-items: center;
+}
+
+#logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+#logo-text {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#service-location {
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+#service-text {
+    font-weight: 600;
+}
+
+#service-area {
+    color: #6b7280;
+}
+
+#profile-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+}
+
+#hero {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin: 10px 60px 0px 60px;
+
+}
+
+#hero-left {
+    flex: 1;
+    justify-content: center;
+}
+
+#hero-title {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+#hero-subtitle {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 24px;
+    max-width: 420px;
+}
+
+#hero-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #b7a8ff;
+    border-radius: 999px;
+    padding: 10px 16px;
+    max-width: 360px;
+}
+
+#search-icon {
+    color: #7058F2;
+    font-size: 16px;
+}
+
+#search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+}
+
+#hero-right {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+}
+
+#hero-image {
+    width: auto;
+    height: 450px;
+}
+
+#stats-banner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    background: #7058F2;
+    color: #fff;
+    padding: 18px 24px;
+    gap: 10px;
+}
+
+#rating {
+    font-size: 20px;
+    text-align: center;
+}
+
+#stat-one, #stat-two, #stat-three {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.stat-label {
+    font-size: 12px;
+}
+
+#offers {
+    padding: 24px;
+}
+
+#offers-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+#offer-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+#offer-card-one,
+#offer-card-two {
+    background: #EEE9FF;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    padding: 18px;
+    gap: 12px;
+}
+
+.offer-text {
+    display: grid;
+    gap: 8px;
+}
+
+.offer-title {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.offer-discount {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.offer-percent {
+    color: #7058F2;
+    font-size: 18px;
+}
+
+.offer-image-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.offer-image {
+    width: 140px;
+    height: auto;
+    object-fit: contain;
+}
+
+#cta {
+    display: flex;
+    justify-content: center;
+    padding: 16px 24px 32px;
+}
+
+#cta-button {
+    background: #12295b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#cta-button:hover {
+    background: #0e2049;
+}
+
+@media (max-width: 768px) {
+    #hero {
+        flex-direction: column;
+    }
+
+    #stats-banner {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #offer-card-one,
+    #offer-card-two {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    #nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
