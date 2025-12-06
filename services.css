@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #111;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px 20px;
+}
+
+#hero-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #b7a8ff;
+    border-radius: 999px;
+    padding: 10px 16px;
+    max-width: 360px;
+}
+
+#search-icon {
+    color: #192156;
+    font-size: 16px;
+}
+
+#search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+}
+
+
+#cta {
+    display: flex;
+    justify-content: center;
+}
+
+.cta-button {
+    background: #192156;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background: #5e48d6;
+}
+
+#our-services {
+    text-align: center;
+    margin: 24px 50px 0 50px;
+}
+
+#our-services h2 {
+    color: #192156;
+    margin-bottom: 40px;
+}
+
+#service-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    width: 300px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.card h3 {
+    color: #192156;
+}
+
+.card .price {
+    color: #192156;
+    font-weight: 600;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}

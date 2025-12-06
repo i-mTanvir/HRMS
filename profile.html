@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RIPO - User Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<header class="main-header">
+    <div class="nav-left">
+        <img src="media/logo.png" alt="RIPO Logo">
+        <span>RIPO</span>
+    </div>
+    <div class="nav-title">My Profile</div>
+</header>
+
+<main class="page-content">
+
+    <!-- PROFILE CARD -->
+    <section class="profile-card">
+        <div class="profile-top">
+            <div class="profile-avatar">
+                <img src="media/service-1.png" alt="User photo">
+            </div>
+
+            <div class="profile-info">
+                <h2 class="profile-name">Tanvir Mahmud</h2>
+                <p class="profile-role">Regular Customer</p>
+
+                <ul class="profile-details">
+                    <li><strong>Email:</strong> tanvir@gmail.com</li>
+                    <li><strong>Phone:</strong> +8801678901234</li>
+                    <li><strong>Location:</strong> Tongi, Gazipur</li>
+                    <li><strong>Joined:</strong> Jan 2025</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="edit-btn" id="open-edit-modal">Edit Profile</button>
+    </section>
+
+</main>
+
+<!-- EDIT PROFILE POPUP / MODAL -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Edit Profile</h3>
+            <button class="close-btn" id="close-edit-modal">&times;</button>
+        </div>
+
+        <form class="edit-form">
+            <div class="field-group">
+                <label for="edit-name">Full Name</label>
+                <input type="text" id="edit-name" placeholder="Enter your name">
+            </div>
+
+            <div class="field-group">
+                <label for="edit-email">Email</label>
+                <input type="email" id="edit-email" placeholder="Enter your email">
+            </div>
+
+            <div class="field-group">
+                <label for="edit-phone">Phone</label>
+                <input type="tel" id="edit-phone" placeholder="Enter your phone number">
+            </div>
+
+            <div class="field-group">
+                <label for="edit-location">Location</label>
+                <input type="text" id="edit-location" placeholder="Enter your area / city">
+            </div>
+
+            <div class="field-group">
+                <label for="edit-photo">Profile Photo</label>
+                <input type="file" id="edit-photo" accept="image/*">
+                <small class="field-note">You can upload JPG, PNG image.</small>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" id="cancel-edit">Cancel</button>
+                <button type="submit" class="primary-btn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- SIMPLE JS FOR OPEN/CLOSE MODAL -->
+<script>
+    const openBtn = document.getElementById('open-edit-modal');
+    const closeBtn = document.getElementById('close-edit-modal');
+    const cancelBtn = document.getElementById('cancel-edit');
+    const modal = document.getElementById('edit-modal');
+
+    function openModal() {
+        modal.classList.add('show');
+    }
+
+    function closeModal() {
+        modal.classList.remove('show');
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    // overlay click e o close
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+</script>
+
+</body>
+</html>
