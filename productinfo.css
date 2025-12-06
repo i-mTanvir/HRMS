@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+}
+
+/* ---------- NAVBAR ---------- */
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 24px;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-left img {
+    height: 40px;
+    width: auto;
+}
+
+.nav-left span {
+    font-size: 22px;
+    font-weight: 700;
+    color: #142356;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #142356;
+}
+
+/* ---------- PAGE CONTENT ---------- */
+
+.page-content {
+    max-width: 960px;
+    margin: 30px auto 40px;
+    padding: 0 16px;
+}
+
+/* IMAGE LEFT + INFO RIGHT */
+
+.service-section {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 30px;
+}
+
+.service-image img {
+    width: 360px;
+    height: auto;
+    border-radius: 16px;
+    object-fit: cover;
+}
+
+.service-info h1 {
+    font-size: 40px;
+    color: #142356;
+    margin-bottom: 8px;
+}
+
+.service-desc {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.service-meta {
+    list-style: none;
+    font-size: 18px;
+    color: #444;
+}
+
+.service-meta li {
+    margin-bottom: 6px;
+}
+/* CARD */
+#provider-info {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 24px 28px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    display: flex;              /* row layout */
+    align-items: flex-start;
+    gap: 20px;                  /* image & text gap */
+}
+
+/* profile image box */
+#provider-info .img-info {
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+
+#provider-info .img-info img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30%;
+}
+
+/* right side text block */
+.provider-details h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.provider-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.provider-details li {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.provider-details li strong {
+    margin-right: 4px;
+    color: #222;
+}
+
+
+
+
+/* wrapper: 2 card side by side */
+.bottom-two-cards {
+    max-width: 1100px;
+    margin: 30px auto 60px;
+    padding: 0 16px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* common card style */
+.bottom-two-cards .card {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.bottom-two-cards .card h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+    color: #142356;
+}
+
+/* -------- BOOKING CARD -------- */
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.field-group label {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.field-group input[type="date"],
+.field-group input[type="time"],
+.field-group textarea {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ccd2e6;
+    font-size: 14px;
+    outline: none;
+    resize: vertical;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+    border-color: #7a3cff;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: none;
+    background: #7a3cff;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* -------- COMMENTS CARD (display only) -------- */
+
+.comments-card .reviews-list {
+    max-height: 300px;      /* beshi review hole scroll hobe */
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.review-item {
+    padding: 8px 0 10px;
+    border-bottom: 1px solid #edf0f7;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.review-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #142356;
+}
+
+.review-rating {
+    font-size: 13px;
+    color: #f0a500;
+}
+
+.review-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 4px;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #888;
+}
+
+.reviews-footer {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #777;
+}
+
+
