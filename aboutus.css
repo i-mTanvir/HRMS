@@ -1,0 +1,303 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #222;
+}
+
+/* ========== HERO SECTION ========== */
+
+.hero {
+    position: relative;
+    height: 260px;
+    background-image: url("media/service-2.png"); /* team/office photo */
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+}
+
+/* dark gradient overlay */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(9, 17, 54, 0.8),
+        rgba(9, 17, 54, 0.6)
+    );
+}
+
+/* nav + hero content above overlay */
+.hero-nav,
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* NAVBAR */
+.hero-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px;
+}
+
+/* logo */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-left img {
+    height: 40px;
+    width: auto;
+}
+
+.nav-left span {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* nav links */
+.nav-links a {
+    margin-left: 18px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #e2e6ff;
+}
+
+.nav-links a.active {
+    font-weight: 600;
+}
+
+/* HERO TEXT */
+.hero-content {
+    height: calc(100% - 56px); /* hero height minus nav */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 36px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.hero-content p {
+    font-size: 14px;
+    color: #dbe0ff;
+}
+
+/* ========== MAIN CONTENT ========== */
+
+.page-content {
+    max-width: 1100px;
+    margin: 40px auto 60px;
+    padding: 0 24px;
+}
+
+/* behind the success text */
+.about-main {
+    margin-bottom: 24px;
+}
+
+.about-text h2 {
+    font-size: 26px;
+    color: #3a2b9b;
+    margin-bottom: 10px;
+}
+
+.about-text p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+/* ========== TEAM CARDS UNDER TEXT ========== */
+
+.team-section {
+    margin-bottom: 36px;
+}
+
+.team-section h2 {
+    font-size: 22px;
+    color: #142356;
+    margin-bottom: 14px;
+}
+
+/* 3 cards in a row */
+.team-grid {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+/* individual card */
+.team-card {
+    flex: 1 1 0;
+    min-width: 220px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 18px 16px 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* photo */
+.team-photo-wrap {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 10px;
+    border-radius: 20%;
+    overflow: hidden;
+    background: #e0e2ff;
+}
+
+.team-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* text */
+.team-card h3 {
+    font-size: 16px;
+    color: #142356;
+    margin-bottom: 2px;
+}
+
+.team-role {
+    display: block;
+    font-size: 12px;
+    color: #7a7fb0;
+    margin-bottom: 6px;
+}
+
+.team-desc {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* ========== STATS ========== */
+
+.stats {
+    display: flex;
+    gap: 16px;
+    margin: 32px 0 30px;
+}
+
+.stat-box {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px 14px;
+    text-align: center;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+}
+
+.stat-box h3 {
+    font-size: 22px;
+    color: #142356;
+    margin-bottom: 4px;
+}
+
+.stat-box p {
+    font-size: 13px;
+    color: #666;
+}
+
+/* ========== SECTIONS (MISSION, HOW IT WORKS) ========== */
+
+.about-section {
+    margin-bottom: 28px;
+}
+
+.about-section h2 {
+    font-size: 22px;
+    color: #142356;
+    margin-bottom: 8px;
+}
+
+.about-section p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 6px;
+}
+
+/* steps list */
+.steps {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+}
+
+/* ========== CTA BOX ========== */
+
+.cta-box {
+    margin-top: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px 22px;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+}
+
+.cta-box h2 {
+    font-size: 20px;
+    color: #142356;
+    margin-bottom: 6px;
+}
+
+.cta-box p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 9px 24px;
+    border-radius: 999px;
+    background: #7a3cff;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 900px) {
+    .team-grid {
+        flex-direction: column;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 700px) {
+    .hero-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .hero-content h1 {
+        font-size: 30px;
+    }
+}
