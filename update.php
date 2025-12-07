@@ -23,8 +23,6 @@ mysqli_query($con, "UPDATE product SET product_name='$product_name',
     offer_off ='$offer_off' WHERE id='$id'");
     header("location: product_display.php");
     exit;
-}else{
-    echo "Invalid Request";
 }
 
 
@@ -32,34 +30,43 @@ $id  = $_GET['id'];
 $row = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM product WHERE id='$id'"));
 ?>
 
-<form method="post">
-    <input type="text" name="product_name" value="<?= $row['product_name'] ?>"><br><br>
-    <textarea name="product_code"><?= $row['product_code'] ?></textarea><br><br>
-    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="update.css">
+</head>
+<body>
+    
 
+<form method="post">
 
     <label for="product_name">Product Name</label>
-                    <input type="text" id="product_name" name="product_name" placeholder="Enter product name">
+                    <input type="text" id="product_name" name="product_name" value="<?= $row['product_name'] ?>">
     
     <label for="product_code">Product Code</label>
-                    <input type="text" id="product_code" name="product_code" placeholder="Enter product code">
+                    <input type="text" id="product_code" name="product_code" value="<?= $row['product_code'] ?>">
 <label for="category">Category</label>
-                    <input type="text" id="category" name="category" placeholder="Enter category">
+                    <input type="text" id="category" name="category" value="<?= $row['category'] ?>">
 
 <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="3"
-                        placeholder="Add a short description"></textarea>
+                    <input id="description" name="description" rows="3"
+                        value="<?= $row['description'] ?>"></input>
 
 <label for="duration">Duration</label>
-                    <input type="text" id="duration" name="duration" placeholder="e.g., 2 hours">
+                    <input type="text" id="duration" name="duration" value="<?= $row['duration'] ?>">
 
      <label for="price1">Price</label>
-                    <input type="text" id="price1" name="price1" placeholder="Enter price">
+                    <input type="text" id="price1" name="price1" value="<?= $row['price'] ?>">
                     
            <label for="offer_off">Offer Off (%)</label>
-                    <input type="number" id="offer_off" name="offer_off" placeholder="e.g., 10">
+                    <input type="number" id="offer_off" name="offer_off" value="<?= $row['offer_off'] ?>">
                     
                     
 
     <input type="submit" value="Update">
 </form>
+</body>
+</html>
