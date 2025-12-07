@@ -43,7 +43,7 @@
                         <td><?= $row['price'] ?>
                     </td>
                     <td>
-                            <a class="update-link" href="product_update.php?id=<?= $row['id'] ?>">Update</a> |
+                            <a class="update-link" href="update.php?id=<?= $row['id'] ?>">Update</a> |
                             <a class="delete-link" href="product_delete.php?id=<?= $row['id'] ?>">Delete</a>
                         </td>
                     </tr>
@@ -229,55 +229,7 @@
 
 
     
-    <div class="modal-backdrop" id="update-backdrop">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="update-modal-title">
-            <div class="modal-header">
-                <h3 id="update-modal-title">Update Service</h3>
-                <button class="close-btn" id="close-update-modal" aria-label="Close update form">✕</button>
-            </div>
-            <form class="modal-form" action="product_update.php" method="post">
-                <div class="form-row full-row">
-                    <label for="update-photo">Photo upload</label>
-                    <input type="file" id="update-photo" name="update-photo" accept="image/*">
-                </div>
-                <div class="form-row">
-                    <label for="product_name">Product Name</label>
-                    <input type="text" id="product_name" name="product_name" placeholder="Enter product name">
-                </div>
-                <div class="form-row">
-                    <label for="product_code">Product Code</label>
-                    <input type="text" id="product_code" name="product_code" placeholder="Enter product code">
-                </div>
-                <div class="form-row">
-                    <label for="category">Category</label>
-                    <input type="text" id="category" name="category" placeholder="Enter category">
-                </div>
-                <div class="form-row full-row">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="3"
-                        placeholder="Add a short description"></textarea>
-                </div>
-                <div class="form-row">
-                    <label for="duration">Duration</label>
-                    <input type="text" id="duration" name="duration" placeholder="e.g., 2 hours">
-                </div>
-                <div class="form-row">
-                   
-                </div>
-                <div class="form-row">
-                    <label for="price1">Price</label>
-                    <input type="text" id="price1" name="price1" placeholder="Enter price">
-                </div>
-                <div class="form-row">
-                    <label for="offer_off">Offer Off (%)</label>
-                    <input type="number" id="offer_off" name="offer_off" placeholder="e.g., 10">
-                </div>
-                <div class="form-actions full-row">
-                    <button type="submit" class="submit-btn">Update</button>
-                </div>
-            </form>
-        </div>
-    </div>
+
 
     <script>
         (function () {
@@ -285,18 +237,8 @@
             const addCloseBtn = document.getElementById('close-modal');
             const addBackdrop = document.getElementById('modal-backdrop');
 
-            const updateBackdrop = document.getElementById('update-backdrop');
-            const updateCloseBtn = document.getElementById('close-update-modal');
-            const updateLinks = document.querySelectorAll('.update-link');
-
             const openAddModal = () => addBackdrop.classList.add('show');
             const closeAddModal = () => addBackdrop.classList.remove('show');
-
-            const openUpdateModal = (event) => {
-                if (event) event.preventDefault();
-                updateBackdrop.classList.add('show');
-            };
-            const closeUpdateModal = () => updateBackdrop.classList.remove('show');
 
             if (addBtn && addCloseBtn && addBackdrop) {
                 addBtn.addEventListener('click', openAddModal);
@@ -306,12 +248,7 @@
                 });
             }
 
-            if (updateBackdrop && updateCloseBtn) {
-                updateCloseBtn.addEventListener('click', closeUpdateModal);
-                updateBackdrop.addEventListener('click', (e) => {
-                    if (e.target === updateBackdrop) closeUpdateModal();
-                });
-            }
+            
 
             updateLinks.forEach((link) => {
                 link.addEventListener('click', openUpdateModal);
