@@ -54,7 +54,9 @@ body {
 
 #our-services {
     text-align: center;
-    margin: 24px 50px 0 50px;
+    margin: 24px auto 0;
+    max-width: 1100px;
+    padding: 0 24px 40px;
 }
 
 #our-services h2 {
@@ -63,17 +65,22 @@ body {
 }
 
 #service-cards {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 290px));
+    justify-content: center;
+    column-gap: 30px;
+    row-gap: 30px;
+    padding: 10px;
 }
 
 .card {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    padding: 15px;
-    width: 300px;
+    padding: 14px 14px 16px;
+    background: #fff;
+    width: 100%;
+    max-width: 290px;
 }
 
 .card img {
