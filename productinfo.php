@@ -1,3 +1,24 @@
+<?php
+include 'connection.php';
+
+$product = null;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+if ($id > 0) {
+    $stmt = mysqli_prepare(
+        $con,
+        "SELECT id, product_name, description, category, duration, price, rating FROM product WHERE id = ?"
+    );
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $product = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +27,6 @@
     <link rel="stylesheet" href="productinfo.css">
 </head>
 <body>
-    
 
 <div class="main-header">
     <div class="nav-left">
@@ -17,33 +37,33 @@
 </div>
 
 <main class="page-content">
-
-    <!-- TOP: IMAGE LEFT + INFO RIGHT -->
+    <?php if (!$product) { ?>
+        <p style="padding:16px;">Service not found. <a href="services.php">Back to services</a></p>
+    <?php } else { ?>
     <div class="service-section">
         <div class="service-image">
-            <img src="media/service-1.png" alt="AC Repair">
+            <img src="media/service-1.png" alt="<?php echo htmlspecialchars($product['product_name']); ?>">
         </div>
 
         <div class="service-info">
-            <h1>AC Deep Cleaning</h1>
+            <h1><?php echo htmlspecialchars($product['product_name']); ?></h1>
             <p class="service-desc">
-                Professional AC cleaning service to keep your home cool and fresh.
+                <?php echo nl2br(htmlspecialchars($product['description'])); ?>
             </p>
 
             <ul class="service-meta">
-                <li><strong>category:</strong> AC Repair</li>
-                <li><strong>Duration:</strong> 2 – 3 hours</li>
-                <li><strong>Price:</strong> ৳ 580</li>
-                <li><strong>Rating:</strong> 4.5 ⭐</li>
+                <li><strong>Category:</strong> <?php echo htmlspecialchars($product['category']); ?></li>
+                <li><strong>Duration:</strong> <?php echo htmlspecialchars($product['duration']); ?></li>
+                <li><strong>Price:</strong> Tk <?php echo htmlspecialchars($product['price']); ?></li>
+                <li><strong>Rating:</strong> <?php echo htmlspecialchars($product['rating'] ?? 'N/A'); ?> &#9733;</li>
             </ul>
         </div>
     </div>
   <div id="provider-info">
     <div class="img-info">
-        <img src="media/profile.jpeg" alt="AC Repair">
+        <img src="media/profile.jpeg" alt="Service Provider">
     </div>
 
-    <!-- ei notun wrapper ta add koro -->
     <div class="provider-details">
         <h3>Service Provider Information</h3>
         <ul>
@@ -53,10 +73,8 @@
         </ul>
     </div>
 </div>
-<!-- BOTTOM: BOOKING + COMMENTS -->
 <section class="bottom-two-cards">
 
-    <!-- LEFT: BOOKING CARD -->
     <div class="card booking-card">
         <h3>Book Service Date & Time</h3>
 
@@ -81,16 +99,14 @@
         </form>
     </div>
 
-    <!-- RIGHT: COMMENTS DISPLAY CARD -->
     <div class="card comments-card">
         <h3>Customer Reviews</h3>
 
         <div class="reviews-list">
-            <!-- 1st review -->
             <div class="review-item">
                 <div class="review-top">
                     <span class="review-name">Sadia Islam</span>
-                    <span class="review-rating">⭐ 4.8</span>
+                    <span class="review-rating">&#9733; 4.8</span>
                 </div>
                 <p class="review-text">
                     Very professional and on time. AC is cooling much better now.
@@ -98,11 +114,10 @@
                 <span class="review-date">12 Dec 2025</span>
             </div>
 
-            <!-- 2nd review -->
             <div class="review-item">
                 <div class="review-top">
                     <span class="review-name">Hasan Ali</span>
-                    <span class="review-rating">⭐ 4.5</span>
+                    <span class="review-rating">&#9733; 4.5</span>
                 </div>
                 <p class="review-text">
                     Good service, friendly behaviour. Will book again.
@@ -110,11 +125,10 @@
                 <span class="review-date">09 Dec 2025</span>
             </div>
 
-            <!-- 3rd review -->
             <div class="review-item">
                 <div class="review-top">
                     <span class="review-name">Nusaiba Rahman</span>
-                    <span class="review-rating">⭐ 5.0</span>
+                    <span class="review-rating">&#9733; 5.0</span>
                 </div>
                 <p class="review-text">
                     Fast response and clean work. Highly recommended!
@@ -124,7 +138,7 @@
              <div class="review-item">
                 <div class="review-top">
                     <span class="review-name">Nusaiba Rahman</span>
-                    <span class="review-rating">⭐ 5.0</span>
+                    <span class="review-rating">&#9733; 5.0</span>
                 </div>
                 <p class="review-text">
                     Fast response and clean work. Highly recommended!
@@ -134,7 +148,7 @@
              <div class="review-item">
                 <div class="review-top">
                     <span class="review-name">Nusaiba Rahman</span>
-                    <span class="review-rating">⭐ 5.0</span>
+                    <span class="review-rating">&#9733; 5.0</span>
                 </div>
                 <p class="review-text">
                     Fast response and clean work. Highly recommended!
@@ -148,6 +162,7 @@
 
 </section>
 
+<?php } ?>
 </main>
 
 </body>
