@@ -17,6 +17,6 @@ if(!$run){
     echo "Error: " . mysqli_error($con);
 
 } else{
-        echo "submission Success!" ;
+        header("Location: product_display.php");
 }
 ?>
