@@ -21,7 +21,7 @@ if ($password !== $confirmPassword) {
 if (!$run) {
     echo "Submission failed";
 } else {
-    header("Location: provider.html");
+    header("Location: product_display.php");
     exit;
 }
 ?>
