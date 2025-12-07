@@ -1,0 +1,230 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* -------- HEADER -------- */
+.main-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 80px;
+    background: #f6f9fc;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#logo img {
+    height: 40px;
+    width: auto;
+}
+
+#logo span {
+    font-size: 24px;
+    font-weight: 700;
+    color: #102258;
+}
+
+#nav-links {
+    display: flex;
+    gap: 40px;
+}
+
+#nav-links a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #102258;
+    position: relative;
+}
+
+#nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #102258;
+    transition: width 0.2s ease;
+}
+
+#nav-links a:hover::after {
+    width: 100%;
+}
+
+/* -------- HERO LAYOUT -------- */
+body {
+    background: #ffffff;
+}
+
+.hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+/* left image */
+.hero-left {
+    flex: 1;
+}
+
+.hero-left img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* right content */
+.hero-right {
+    flex: 1;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #102258;
+    margin-bottom: 10px;
+}
+
+.signup-role {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    margin-bottom: 24px;
+    border: 1px solid #cfcfcf;
+    border-radius: 12px;
+    background: #f7f8fc;
+    font-size: 14px;
+    color: #102258;
+}
+
+.signup-role label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #333;
+    cursor: pointer;
+}
+
+.signup-role input[type="radio"] {
+    accent-color: #7a3cff;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* -------- SIGNUP FORM -------- */
+.signup-form {
+    margin-bottom: 16px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.required {
+    color: #ff7a00;
+    margin-left: 2px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1px solid #cfcfcf;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #7a3cff;
+}
+
+/* terms checkbox */
+.terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #444;
+    margin: 6px 0 18px;
+    max-width: 360px;
+}
+
+.terms-row a {
+    color: #3e5bfd;
+    text-decoration: none;
+}
+
+/* submit button */
+.primary-btn {
+    width: 100%;
+    padding: 12px 0;
+    background: #7a3cff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.bottom-text {
+    font-size: 14px;
+    color: #444;
+    margin-top: 14px;
+}
+
+.link-main {
+    color: #7a3cff;
+    text-decoration: none;
+}
+
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 12px 20px;
+    }
+
+    #nav-links {
+        gap: 20px;
+        font-size: 14px;
+    }
+
+    .hero {
+        flex-direction: column;
+        padding: 30px 20px 50px;
+        text-align: left;
+    }
+
+    .hero-right {
+        width: 100%;
+    }
+
+    .terms-row {
+        max-width: 100%;
+    }
+}
