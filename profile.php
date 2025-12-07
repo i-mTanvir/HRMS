@@ -1,3 +1,14 @@
+<?php
+include("connection.php");
+
+$id = $_GET['id'];
+
+$query = "SELECT * FROM customers WHERE id='$id'";
+$result = mysqli_query($con, $query);
+$row = mysqli_fetch_assoc($result);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,14 +37,15 @@
             </div>
 
             <div class="profile-info">
-                <h2 class="profile-name">Tanvir Mahmud</h2>
+                <h2 class="profile-name"><?php echo $row['full_name']; ?></h2>
+
                 <p class="profile-role">Regular Customer</p>
 
                 <ul class="profile-details">
-                    <li><strong>Email:</strong> tanvir@gmail.com</li>
-                    <li><strong>Phone:</strong> +8801678901234</li>
-                    <li><strong>Location:</strong> Tongi, Gazipur</li>
-                    <li><strong>Joined:</strong> Jan 2025</li>
+                    <li><strong>Email:</strong><?php echo $row['email']; ?></li>
+                    <li><strong>Phone:</strong><?php echo $row['mobile_number'];?></li>
+                    <li><strong>Location:</strong><?php echo $row['location'] ?></li>
+                    <li><strong>Joined:</strong><?php echo $row['joined'] ?></li>
                 </ul>
             </div>
         </div>
