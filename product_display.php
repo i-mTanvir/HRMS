@@ -1,29 +1,66 @@
 <?php
+include 'connection.php';
 
-    include 'connection.php';
+$providerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+if ($providerId <= 0) {
+    die("Invalid provider id");
+}
 
-    $query = "SELECT * FROM product";
-    $run = mysqli_query($con, $query);
+// Provider
+$pstmt = mysqli_prepare($con, "SELECT full_name, email FROM providers WHERE id = ?");
+mysqli_stmt_bind_param($pstmt, "i", $providerId);
+mysqli_stmt_execute($pstmt);
+$presult = mysqli_stmt_get_result($pstmt);
+$provider = mysqli_fetch_assoc($presult);
+mysqli_stmt_close($pstmt);
 
-    if(mysqli_num_rows($run) > 0){
+if (!$provider) {
+    die("Provider not found");
+}
+$providerEmail = $provider['email'];
+$providerName  = $provider['full_name'];
 
+// Products for provider
+$productStmt = mysqli_prepare($con, "SELECT * FROM product WHERE provider_email = ?");
+mysqli_stmt_bind_param($productStmt, "s", $providerEmail);
+$productStmt->execute();
+$productsResult = mysqli_stmt_get_result($productStmt);
+$hasProducts = $productsResult && mysqli_num_rows($productsResult) > 0;
+
+// Requests for provider
+$requestsStmt = mysqli_prepare(
+    $con,
+    "SELECT id, product_name, customer_name, customer_phone, customer_location, booking_date, booking_time, price, status, paid
+     FROM services
+     WHERE provider_email = ?
+     ORDER BY created_at DESC"
+);
+mysqli_stmt_bind_param($requestsStmt, "s", $providerEmail);
+mysqli_stmt_execute($requestsStmt);
+$requestsResult = mysqli_stmt_get_result($requestsStmt);
+$hasRequests = $requestsResult && mysqli_num_rows($requestsResult) > 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Provider Dashboard</title>
     <link rel="stylesheet" href="provider.css">
 </head>
-
 <body>
+
+<div id="page">
+        <div id="emergency-banner">24/7 emergency services +1 (877) 555-6666</div>
+
     <div class="page">
         <section class="services-section">
             <div class="section-header">
-                <h2>Your Services</h2>
-                <button class="add-btn" id="open-modal">Add New</button>
+                <h2>Your Services (<?= htmlspecialchars($providerName) ?>)</h2>
+                <div class="header-actions">
+                    <a class="add-btn" href="add_new.php?id=<?= $providerId ?>">Add New</a>
+                    <a class="logout-btn" href="login.html">Logout</a>
+                </div>
             </div>
             <table class="data-table services-table">
                 <thead>
@@ -34,24 +71,25 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <?php while($row = mysqli_fetch_assoc($run)){ ?>
-                    <tr>
-                        <td><?= $row['product_name'] ?></td>
-                        <td><?= $row['description'] ?></td>
-                        <td><?= $row['price'] ?>
-                    </td>
-                    <td>
-                            <a class="update-link" href="update.php?id=<?= $row['id'] ?>">Update</a> |
-                            <a class="delete-link" href="product_delete.php?id=<?= $row['id'] ?>">Delete</a>
-                        </td>
-                    </tr>
-                     <?php } ?>
-                    <tr>
-                     <?php } ?>
+                    <?php if ($hasProducts): ?>
+                        <?php while ($product = mysqli_fetch_assoc($productsResult)): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($product['product_name']) ?></td>
+                                <td><?= htmlspecialchars($product['description']) ?></td>
+                                <td><?= htmlspecialchars($product['price']) ?></td>
+                                <td>
+                                    <a class="update-link" href="update.php?id=<?= $product['id'] ?>">Update</a> |
+                                    <a class="delete-link" href="product_delete.php?id=<?= $product['id'] ?>">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4">No products added yet.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
-                
             </table>
         </section>
 
@@ -72,188 +110,52 @@
         </section>
 
         <section class="requests-section">
-            <h3>Requests</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Service</th>
-                        <th>Date</th>
-                        <th>C Name</th>
-                        <th>Phone</th>
-                        <th>Location</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>AC Repair</td>
-                        <td>11-12-25</td>
-                        <td>Tanvir</td>
-                        <td>01755663322</td>
-                        <td>Tongi, Gazipur</td>
-                        <td>500</td>
-                        <td class="action-icons">
-                            <a href="update.php?id=<?php echo $row['id']; ?>">✅</a> |
-                            <a href="delete.php?id=<?php echo $row['id']; ?>">❌</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>TV Repair</td>
-                        <td>11-12-25</td>
-                        <td>Rakib</td>
-                        <td>01966332255</td>
-                        <td>House 10, Mirpur road</td>
-                        <td>500</td>
-                        <td class="action-icons">
-                            <a href="update.php?id=<?php echo $row['id']; ?>">✅</a> |
-                            <a href="delete.php?id=<?php echo $row['id']; ?>">❌</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Fridge Repair</td>
-                        <td>11-12-25</td>
-                        <td>Sunriza</td>
-                        <td>01599884455</td>
-                        <td>RASG, DSA, Savar</td>
-                        <td>500</td>
-                        <td class="action-icons">
-                            <a href="update.php?id=<?php echo $row['id']; ?>">✅</a> |
-                            <a href="delete.php?id=<?php echo $row['id']; ?>">❌</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="status-section">
             <h3>All Status</h3>
             <table class="data-table">
                 <thead>
                     <tr>
                         <th>Service</th>
                         <th>Date</th>
+                        <th>Time</th>
                         <th>C Name</th>
                         <th>Phone</th>
                         <th>Location</th>
                         <th>Price</th>
                         <th>Status</th>
-                        <th>Pay</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>AC Repair</td>
-                        <td>11-12-25</td>
-                        <td>Tanvir</td>
-                        <td>01755663322</td>
-                        <td>Tongi, Gazipur</td>
-                        <td>500</td>
-                        <td class="status-icons"><span class="accept">✅</span></td>
-                        <td class="status-icons"><span class="accept">✅</span></td>
-                    </tr>
-                    <tr>
-                        <td>TV Repair</td>
-                        <td>11-12-25</td>
-                        <td>Rakib</td>
-                        <td>01966332255</td>
-                        <td>House 10, Mirpur road</td>
-                        <td>500</td>
-                        <td class="status-icons"><span class="accept">✅</span></td>
-                        <td class="status-icons"><span class="reject">❌</span></td>
-                    </tr>
-                    <tr>
-                        <td>Fridge Repair</td>
-                        <td>11-12-25</td>
-                        <td>Sunriza</td>
-                        <td>01599884455</td>
-                        <td>RASG, DSA, Savar</td>
-                        <td>500</td>
-                        <td class="status-icons"><span class="reject">❌</span></td>
-                        <td class="status-icons"><span class="reject">❌</span></td>
-                    </tr>
+                    <?php if ($hasRequests): ?>
+                        <?php while ($req = mysqli_fetch_assoc($requestsResult)): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($req['product_name']); ?></td>
+                                <td><?= htmlspecialchars($req['booking_date']); ?></td>
+                                <td><?= htmlspecialchars($req['booking_time']); ?></td>
+                                <td><?= htmlspecialchars($req['customer_name']); ?></td>
+                                <td><?= htmlspecialchars($req['customer_phone']); ?></td>
+                                <td><?= htmlspecialchars($req['customer_location']); ?></td>
+                                <td><?= htmlspecialchars($req['price']); ?></td>
+                                <td><?= htmlspecialchars($req['status']); ?></td>
+                                <td>
+                                    <?php $isPaid = isset($req['paid']) && ($req['paid'] === 'paid' || intval($req['paid']) === 1); ?>
+                                    <?php if ($isPaid): ?>
+                                        Paid
+                                    <?php else: ?>
+                                        <a href="booking_confirm.php?id=<?= urlencode($req['id']); ?>">Confirm</a> |
+                                        <a href="booking_cancel.php?id=<?= urlencode($req['id']); ?>">Cancel</a>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="9">No requests yet.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </section>
     </div>
-
-    <div class="modal-backdrop" id="modal-backdrop">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <div class="modal-header">
-                <h3 id="modal-title">Add New Service</h3>
-                <button class="close-btn" id="close-modal" aria-label="Close form">✕</button>
-            </div>
-            <form class="modal-form" action="product_insert.php" method="post">
-                <div class="form-row full-row">
-                    <label for="service-photo">Photo upload</label>
-                    <input type="file" id="service-photo" name="service-photo" accept="image/*">
-                </div>
-                <div class="form-row">
-                    <label for="product_name">Product Name</label>
-                    <input type="text" id="product_name" name="product_name" placeholder="Enter product name">
-                </div>
-                <div class="form-row">
-                    <label for="product_code">Product Code</label>
-                    <input type="text" id="product_code" name="product_code" placeholder="Enter product code">
-                </div>
-                <div class="form-row">
-                    <label for="category">Category</label>
-                    <input type="text" id="category" name="category" placeholder="Enter category">
-                </div>
-                <div class="form-row full-row">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="3"
-                        placeholder="Add a short description"></textarea>
-                </div>
-                <div class="form-row">
-                    <label for="duration">Duration</label>
-                    <input type="text" id="duration" name="duration" placeholder="e.g., 2 hours">
-                </div>
-                <div class="form-row">
-                   
-                </div>
-                <div class="form-row">
-                    <label for="price1">Price</label>
-                    <input type="text" id="price1" name="price1" placeholder="Enter price">
-                </div>
-                <div class="form-row">
-                    <label for="offer_off">Offer Off (%)</label>
-                    <input type="number" id="offer_off" name="offer_off" placeholder="e.g., 10">
-                </div>
-                <div class="form-actions full-row">
-                    <button type="submit" class="submit-btn">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    
-
-
-    <script>
-        (function () {
-            const addBtn = document.getElementById('open-modal');
-            const addCloseBtn = document.getElementById('close-modal');
-            const addBackdrop = document.getElementById('modal-backdrop');
-
-            const openAddModal = () => addBackdrop.classList.add('show');
-            const closeAddModal = () => addBackdrop.classList.remove('show');
-
-            if (addBtn && addCloseBtn && addBackdrop) {
-                addBtn.addEventListener('click', openAddModal);
-                addCloseBtn.addEventListener('click', closeAddModal);
-                addBackdrop.addEventListener('click', (e) => {
-                    if (e.target === addBackdrop) closeAddModal();
-                });
-            }
-
-            
-
-            updateLinks.forEach((link) => {
-                link.addEventListener('click', openUpdateModal);
-            });
-        })();
-    </script>
 </body>
 </html>

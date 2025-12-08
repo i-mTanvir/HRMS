@@ -1,58 +1,66 @@
 <?php
-$con = mysqli_connect("localhost", "root", "", "ripo");
+require 'connection.php';
 
-if (!$con) {
-    die("DB connection failed: " . mysqli_connect_error());
+// Read provider id from GET first (per flow), fallback to POST hidden field
+$providerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+if ($providerId <= 0 && isset($_POST['id'])) {
+    $providerId = intval($_POST['id']);
 }
 
-// 1) Get provider id from POST (hidden input)
-if (!isset($_POST['id'])) {
-    die("No provider ID in POST");
+if ($providerId <= 0) {
+    die("Invalid provider ID");
 }
 
-$id = intval($_POST["id"]);
-if ($id <= 0) {
-    die("Invalid provider ID: " . htmlspecialchars($_POST['id']));
+// Fetch provider name and email
+$providerStmt = mysqli_prepare($con, "SELECT full_name, email FROM providers WHERE id = ?");
+mysqli_stmt_bind_param($providerStmt, "i", $providerId);
+mysqli_stmt_execute($providerStmt);
+$providerResult = mysqli_stmt_get_result($providerStmt);
+$providerRow = mysqli_fetch_assoc($providerResult);
+
+if (!$providerRow) {
+    die("No provider found with the given id");
 }
 
-// 2) Get provider full_name
-$provider_info = "SELECT full_name FROM providers WHERE id = $id";
-$result = mysqli_query($con, $provider_info);
+$providerName  = mysqli_real_escape_string($con, $providerRow['full_name']);
+$providerEmail = mysqli_real_escape_string($con, $providerRow['email']);
 
-if (!$result) {
-    die("Provider query failed: " . mysqli_error($con));
+// Collect and escape product data from form
+$product_name = mysqli_real_escape_string($con, $_POST['product_name'] ?? '');
+$product_code = mysqli_real_escape_string($con, $_POST['product_code'] ?? '');
+$category     = mysqli_real_escape_string($con, $_POST['category'] ?? '');
+$description  = mysqli_real_escape_string($con, $_POST['description'] ?? '');
+$duration     = mysqli_real_escape_string($con, $_POST['duration'] ?? '');
+$offer_off    = isset($_POST['offer_off']) ? intval($_POST['offer_off']) : 0;
+$price1       = isset($_POST['price1']) ? floatval($_POST['price1']) : 0;
+
+// Insert product with provider name and email included
+$insertSql = "INSERT INTO product (product_name, product_code, category, description, duration, offer_off, price, provider_name, provider_email)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$insertStmt = mysqli_prepare($con, $insertSql);
+
+if (!$insertStmt) {
+    die("Prepare failed: " . mysqli_error($con));
 }
 
-$row = mysqli_fetch_assoc($result);
-if (!$row) {
-    die("No provider found with id = $id");
-}
+mysqli_stmt_bind_param(
+    $insertStmt,
+    "sssssidss",
+    $product_name,
+    $product_code,
+    $category,
+    $description,
+    $duration,
+    $offer_off,
+    $price1,
+    $providerName,
+    $providerEmail
+);
 
-$provider_name = mysqli_real_escape_string($con, $row['full_name']);
-
-// 3) Get product data from form
-$product_name   = mysqli_real_escape_string($con, $_POST['product_name']);
-$product_code   = mysqli_real_escape_string($con, $_POST['product_code']);
-$category       = mysqli_real_escape_string($con, $_POST['category']);
-$description    = mysqli_real_escape_string($con, $_POST['description']);
-$offer_off      = intval($_POST['offer_off']);
-$duration       = mysqli_real_escape_string($con, $_POST['duration']);
-$price1         = floatval($_POST['price1']);
-
-// 4) Insert product with provider_name
-$query = "
-INSERT INTO product 
-    (product_name, product_code, category, description, duration, offer_off, price, provider_name)
-VALUES 
-    ('$product_name', '$product_code', '$category', '$description', '$duration', $offer_off, $price1, '$provider_name')
-";
-
-$run = mysqli_query($con, $query);
-
-if (!$run) {
+if (!mysqli_stmt_execute($insertStmt)) {
     die("Error inserting product: " . mysqli_error($con));
-} else {
-    header("Location: product_display.php?id=" . $row['id']);
-    exit();
 }
+
+header("Location: product_display.php?id=" . $providerId);
+exit();
 ?>
