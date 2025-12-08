@@ -1,11 +1,30 @@
 <?php
 include("connection.php");
 
-$id = $_GET['id'];
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+if ($id <= 0) {
+    die("Invalid customer id");
+}
 
+// Customer info
 $query = "SELECT * FROM customers WHERE id='$id'";
 $result = mysqli_query($con, $query);
 $row = mysqli_fetch_assoc($result);
+if (!$row) {
+    die("Customer not found");
+}
+
+// Services booked by this customer (match by customer email)
+$customerEmail = mysqli_real_escape_string($con, $row['email']);
+$servicesSql = "
+    SELECT id, product_name, provider_name, booking_date, booking_time,
+           customer_name, customer_phone, customer_location, price, status, paid
+    FROM services
+    WHERE customer_email = '$customerEmail'
+    ORDER BY created_at DESC
+";
+$servicesResult = mysqli_query($con, $servicesSql);
+$hasServices = $servicesResult && mysqli_num_rows($servicesResult) > 0;
 ?>
 
 
@@ -50,78 +69,78 @@ $row = mysqli_fetch_assoc($result);
             </div>
         </div>
 
-        <button class="edit-btn" id="open-edit-modal">Edit Profile</button>
+        <a class="logout-btn" href="login.html">Logout</a>
+    </section>
+
+    <!-- SERVICES / BOOKINGS LIST -->
+    <section class="services-section">
+        <div class="section-header">
+            <h3>Your Requests</h3>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Provider</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                    <th>Phone</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($hasServices): ?>
+                    <?php while ($svc = mysqli_fetch_assoc($servicesResult)): ?>
+                        <?php
+                            $isAccepted = ($svc['status'] === 'accepted');
+                            $isCanceled = ($svc['status'] === 'canceled');
+                            $isPaid     = ($svc['paid'] === 'paid' || $svc['paid'] == 1);
+                            $canPay     = $isAccepted && !$isPaid;
+                        ?>
+                        <tr>
+                            <td><?= htmlspecialchars($svc['product_name']); ?></td>
+                            <td><?= htmlspecialchars($svc['provider_name']); ?></td>
+                            <td><?= htmlspecialchars($svc['booking_date']); ?></td>
+                            <td><?= htmlspecialchars($svc['booking_time']); ?></td>
+                            <td><?= htmlspecialchars($svc['customer_location']); ?></td>
+                            <td><?= htmlspecialchars($svc['customer_phone']); ?></td>
+                            <td><?= htmlspecialchars($svc['price']); ?></td>
+                            <td><?= htmlspecialchars($svc['status']); ?></td>
+                            <td>
+                                <?php if ($isPaid): ?>
+                                    <span class="paid-pill">Paid</span>
+                                <?php else: ?>
+                                    <form action="payment.php" method="post" style="margin:0; display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                                        <input type="hidden" name="service_id" value="<?= $svc['id']; ?>">
+                                        <input type="hidden" name="customer_id" value="<?= $id; ?>">
+                                        <input type="number" name="star" min="1" max="5" step="1" placeholder="Rate 1-5" style="width:80px; padding:6px 8px; border:1px solid #ccd2e6; border-radius:6px;" required>
+                                        <input type="text" name="comment" placeholder="Write a feedback" style="padding:6px 8px; border:1px solid #ccd2e6; border-radius:6px; min-width:140px;" required>
+                                        <button
+                                            type="submit"
+                                            name="pay"
+                                            <?= $canPay ? '' : 'disabled'; ?>
+                                            style="background: <?= $canPay ? '#192156' : '#999'; ?>; color: #fff; padding: 6px 12px; border: none; border-radius: 4px; cursor: <?= $canPay ? 'pointer' : 'not-allowed'; ?>;"
+                                        >
+                                            Payment
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="9">No requests yet.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </section>
 
 </main>
-
-<!-- EDIT PROFILE POPUP / MODAL -->
-<div class="modal-overlay" id="edit-modal">
-    <div class="modal">
-        <div class="modal-header">
-            <h3>Edit Profile</h3>
-            <button class="close-btn" id="close-edit-modal">&times;</button>
-        </div>
-
-        <form class="edit-form">
-            <div class="field-group">
-                <label for="edit-name">Full Name</label>
-                <input type="text" id="edit-name" placeholder="Enter your name">
-            </div>
-
-            <div class="field-group">
-                <label for="edit-email">Email</label>
-                <input type="email" id="edit-email" placeholder="Enter your email">
-            </div>
-
-            <div class="field-group">
-                <label for="edit-phone">Phone</label>
-                <input type="tel" id="edit-phone" placeholder="Enter your phone number">
-            </div>
-
-            <div class="field-group">
-                <label for="edit-location">Location</label>
-                <input type="text" id="edit-location" placeholder="Enter your area / city">
-            </div>
-
-            <div class="field-group">
-                <label for="edit-photo">Profile Photo</label>
-                <input type="file" id="edit-photo" accept="image/*">
-                <small class="field-note">You can upload JPG, PNG image.</small>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" class="secondary-btn" id="cancel-edit">Cancel</button>
-                <button type="submit" class="primary-btn">Save Changes</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- SIMPLE JS FOR OPEN/CLOSE MODAL -->
-<script>
-    const openBtn = document.getElementById('open-edit-modal');
-    const closeBtn = document.getElementById('close-edit-modal');
-    const cancelBtn = document.getElementById('cancel-edit');
-    const modal = document.getElementById('edit-modal');
-
-    function openModal() {
-        modal.classList.add('show');
-    }
-
-    function closeModal() {
-        modal.classList.remove('show');
-    }
-
-    openBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-
-    // overlay click e o close
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-</script>
 
 </body>
 </html>

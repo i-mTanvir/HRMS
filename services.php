@@ -1,6 +1,11 @@
 ﻿<?php
     include 'connection.php';
 
+    include "cnav.php";
+
+    // Logged-in customer id passed in querystring: services.php?id=CUSTOMER_ID
+    $customerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
     // simple search term from query string
     $key = '';
     if (isset($_GET['search'])) {
@@ -10,11 +15,17 @@
     // build query (basic LIKE search on name/code/description)
     $safeKey = mysqli_real_escape_string($con, $key);
     $query = "
-        SELECT id, product_name, price, rating
-        FROM product
-        WHERE product_name LIKE '%$safeKey%'
-           OR product_code LIKE '%$safeKey%'
-           OR description LIKE '%$safeKey%'";
+        SELECT
+            p.id,
+            p.product_name,
+            p.price,
+            COALESCE(AVG(s.star), NULL) AS avg_star
+        FROM product p
+        LEFT JOIN services s ON s.product_id = p.id AND s.star IS NOT NULL
+        WHERE p.product_name LIKE '%$safeKey%'
+           OR p.product_code LIKE '%$safeKey%'
+           OR p.description LIKE '%$safeKey%'
+        GROUP BY p.id, p.product_name, p.price";
 
     $run = mysqli_query($con, $query);
 ?>
@@ -29,9 +40,11 @@
 </head>
 
 <body>
+
+
     <form class="search-container" method="get" action="services.php">
+        <input type="hidden" name="id" value="<?php echo $customerId; ?>">
         <div id="hero-search">
-            <div id="search-icon">&#128269;</div>
             <input id="search-input" name="search" type="text" placeholder="Search ..." value="<?php echo htmlspecialchars($key); ?>">
         </div>
     </form>
@@ -44,10 +57,10 @@
                         <div class="card">
                             <img src="media/service-1.png" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
                             <h3><?php echo htmlspecialchars($row['product_name']); ?></h3>
-                            <p>Rating: <?php echo (isset($row['rating']) && $row['rating'] !== '' ? htmlspecialchars($row['rating']) : 'N/A'); ?></p>
+                            <p>Rating: <?php echo ($row['avg_star'] !== null ? htmlspecialchars(round($row['avg_star'], 1)) : 'N/A'); ?></p>
                             <div class="card-bottom">
-                                <span class="price">Rs. <?php echo htmlspecialchars($row['price']); ?></span>
-                                <a class="cta-button" href="productinfo.php?id=<?php echo urlencode($row['id']); ?>">Book</a>
+                                <span class="price">Taka <?php echo htmlspecialchars($row['price']); ?></span>
+                                <a class="cta-button" href="productinfo.php?id=<?php echo urlencode($row['id']); ?>&cid=<?php echo $customerId; ?>">Book</a>
                             </div>
                         </div>
                     <?php } ?>
