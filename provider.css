@@ -27,6 +27,12 @@ section {
     font-size: 22px;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .add-btn {
     background: #1c2756;
     color: #fff;
@@ -35,10 +41,28 @@ section {
     padding: 10px 16px;
     font-size: 14px;
     cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .add-btn:hover {
     background: #253272;
+}
+
+.logout-btn {
+    background: #c62828;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    background: #a71f1f;
 }
 
 h3 {
@@ -218,4 +242,45 @@ h3 {
 
 .submit-btn:hover {
     background: #253272;
+}
+
+
+
+#emergency-banner {
+    background: #192156;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#nav-left {
+    display: flex;
+    align-items: center;
+}
+
+#logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+#logo-text {
+    font-size: 24px;
+    font-weight: 700;
 }

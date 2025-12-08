@@ -22,7 +22,7 @@ if ($password !== $confirmPassword) {
 if (!$run) {
     echo "Submission failed";
 } else {
-    header("Location: customer_dashboard.html");
+    header("Location: customer_dashboard.php");
     exit;
 }
 ?>

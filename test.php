@@ -32,7 +32,7 @@ if ($role == 'customer') {
         $row = mysqli_fetch_assoc($result);
 
         // 3. Make sure header is clean and correct
-        header("Location: customer_dashboard.html?id=" . $row['id']);
+        header("Location: customer_dashboard.php?id=" . $row['id']);
         exit();
     }
 

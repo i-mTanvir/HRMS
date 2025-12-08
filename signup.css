@@ -182,13 +182,17 @@ body {
 .primary-btn {
     width: 100%;
     padding: 12px 0;
-    background: #7a3cff;
+    background: #192156;
     color: #fff;
     border: none;
     border-radius: 10px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #7A3CFF;
 }
 
 .bottom-text {

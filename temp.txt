@@ -56,6 +56,7 @@ $servicesResult = mysqli_query($con, $servicesSql);
                 Need a trusted repair pro? Find and book the right specialist online, choose your time, and get transparent pricing for a quick, reliable fix.
             </div>
             <a id="hero-search" href="services.php?id=<?php echo $row['id']; ?>">
+                <div id="search-icon">🔍</div>
                 <span id="search-input">Search ...</span>
             </a>
         </div>
@@ -66,7 +67,7 @@ $servicesResult = mysqli_query($con, $servicesSql);
 
     <div id="stats-banner">
         <div id="rating">
-            <span>ミ.</span><span>ミ.</span><span>ミ.</span><span>ミ.</span><span>ミ.</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
         </div>
         <div id="stat-one">
             <div class="stat-number">21K+</div>
@@ -85,21 +86,35 @@ $servicesResult = mysqli_query($con, $servicesSql);
     <div id="our-services">
         <h2>Our Services</h2>
         <div id="service-cards">
-            <?php if ($servicesResult && mysqli_num_rows($servicesResult) > 0): ?>
-                <?php while ($svc = mysqli_fetch_assoc($servicesResult)): ?>
-                    <div class="card">
-                        <img src="media/service-1.png" alt="<?php echo htmlspecialchars($svc['product_name']); ?>">
-                        <h3><?php echo htmlspecialchars($svc['product_name']); ?></h3>
-                        <p>Rating: <?php echo ($svc['avg_star'] !== null ? htmlspecialchars(round($svc['avg_star'], 1)) : 'N/A'); ?></p>
-                        <div class="card-bottom">
-                            <span class="price">Taka <?php echo htmlspecialchars($svc['price']); ?></span>
-                            <a class="cta-button" href="productinfo.php?id=<?php echo urlencode($svc['id']); ?>&cid=<?php echo $row['id']; ?>">Book</a>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No services available right now.</p>
-            <?php endif; ?>
+            <div class="card" id="card-1">
+                <img src="media/service-1.png" alt="AC Repair">
+                <h3>AC Repair</h3>
+                <p>Rating: 4.5 ★</p>
+                <div class="card-bottom">
+                    <span class="price">Tk 580</span>
+                    <button class="cta-button">Book</button>
+                </div>
+            </div>
+
+            <div class="card" id="card-2">
+                <img src="media/service-2.png" alt="TV Repair">
+                <h3>TV Repair</h3>
+                <p>Rating: 4.6 ★</p>
+                <div class="card-bottom">
+                    <span class="price">Tk 650</span>
+                    <button class="cta-button">Book</button>
+                </div>
+            </div>
+
+            <div class="card" id="card-3">
+                <img src="media/service-3.png" alt="Fridge Repair">
+                <h3>Fridge Repair</h3>
+                <p>Rating: 4.7 ★</p>
+                <div class="card-bottom">
+                    <span class="price">Tk 720</span>
+                    <button class="cta-button">Book</button>
+                </div>
+            </div>
         </div>
 
         <div id="explore-more">
@@ -208,3 +223,4 @@ $servicesResult = mysqli_query($con, $servicesSql);
     </script>
 </body>
 </html>
+
